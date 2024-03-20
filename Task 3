@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Pricing structure
+struct Pricing {
+    float individualAdult;
+    float individualChild;
+    float familyTicket; // For 2 adults and up to 3 children
+    float groupTicket; // Flat rate for groups up to 10 people
+};
+
+// Function to calculate total cost for individual tickets
+float calculateIndividualCost(int adults, int children, const Pricing& prices) {
+    return adults * prices.individualAdult + children * prices.individualChild;
+}
+
+// Function to calculate total cost for family tickets
+float calculateFamilyCost(int adults, int children, const Pricing& prices) {
+    int families = max((adults + 1) / 2, (children + 2) / 3); // Determine the number of family tickets needed
+    return families * prices.familyTicket;
+}
+
+// Function to suggest the best booking option
+void suggestBestOption(int adults, int children, const Pricing& prices) {
+    float individualCost = calculateIndividualCost(adults, children, prices);
+    float familyCost = calculateFamilyCost(adults, children, prices);
+    float groupCost = prices.groupTicket;
+    
+    // Comparing the costs
+    float bestValue = min({individualCost, familyCost, groupCost});
+    
+    if (bestValue == groupCost) {
+        cout << "Best option: Group ticket at $" << groupCost << endl;
+    } else if (bestValue == familyCost) {
+        cout << "Best option: Family tickets at $" << familyCost << endl;
+    } else {
+        cout << "Best option: Individual tickets at $" << individualCost << endl;
+    }
+}
+
+int main() {
+    // Example pricing
+    Pricing prices = {10.0, 5.0, 25.0, 80.0}; // Example prices
+    
+    // Example group
+    int adults = 4;
+    int children = 6;
+    
+    suggestBestOption(adults, children, prices);
+    
+    return 0;
+}
