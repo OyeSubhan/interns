@@ -1,0 +1,84 @@
+#include <iostream>
+using namespace std;
+#include <string>
+#include <map>
+
+// Define a structure for ticket options
+struct TicketOption {
+    string description;
+    double price;
+};
+
+// Initialize ticket options and prices
+map<std::string, TicketOption> oneDayTickets = {
+    {"Standard", {"Access to all standard attractions", 50.00}},
+    {"VIP", {"Access to all attractions + VIP lounge", 80.00}}
+};
+map<std::string, TicketOption> twoDayTickets = {
+    {"Standard", {"Access to all standard attractions for two days", 90.00}},
+    {"VIP", {"Access to all attractions + VIP lounge for two days", 150.00}}
+};
+
+// Global variable for booking number (for simplicity, not recommended in real applications)
+unsigned int bookingNumber = 0;
+
+// Function to display ticket options
+void displayTicketOptions(const std::map<std::string, TicketOption>& tickets) {
+    for (const auto& ticket : tickets) {
+        cout << ticket.first << " Ticket: " << ticket.second.description
+                  << " - $" << ticket.second.price << endl;
+    }
+}
+
+// Function to process booking
+void processBooking() {
+string ticketType;
+    string ticketDuration;
+    int quantity;
+
+cout << "Enter ticket type (Standard/VIP): ";
+    cin >> ticketType;
+    cout << "Enter ticket duration (One-Day/Two-Day): ";
+    cin >> ticketDuration;
+    cout << "Enter quantity: ";
+    cin >> quantity;
+
+    double totalPrice = 0.0;
+    if (ticketDuration == "One-Day") {
+        totalPrice = oneDayTickets[ticketType].price * quantity;
+    } else if (ticketDuration == "Two-Day") {
+        totalPrice = twoDayTickets[ticketType].price * quantity;
+    } else {
+        cout << "Invalid ticket duration entered." << endl;
+        return;
+    }
+
+    // Generate a unique booking number (simple increment)
+    bookingNumber++;
+
+    // Display booking details
+    cout << "\nBooking Details:" <<endl;
+    cout << "Booking Number: " << bookingNumber << endl;
+    cout << "Ticket Type: " << ticketType << endl;
+    cout << "Duration: " << ticketDuration << endl;
+    cout << "Quantity: " << quantity << endl;
+    cout << "Total Cost: $" << totalPrice << endl;
+}
+
+int main() {
+    char proceed = 'y';
+    while (proceed == 'y' || proceed == 'Y') {
+        cout << "One-Day Ticket Options:" << endl;
+        displayTicketOptions(oneDayTickets);
+
+        cout << "\nTwo-Day Ticket Options:" << endl;
+        displayTicketOptions(twoDayTickets);
+
+        processBooking();
+
+        cout << "\nWould you like to process another booking? (y/n): ";
+        cin >> proceed;
+    }
+
+    return 0;
+}
