@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+#include <string>
+#include <map>
+
+// Define a structure for ticket options
+struct TicketOption {
+    std::string description;
+    double price;
+};
+
+// Initialize ticket options and prices
+std::map<std::string, TicketOption> oneDayTickets = {
+    {"Standard", {"Access to all standard attractions", 50.00}},
+    {"VIP", {"Access to all attractions + VIP lounge", 80.00}}
+};
+
+std::map<std::string, TicketOption> twoDayTickets = {
+    {"Standard", {"Access to all standard attractions for two days", 90.00}},
+    {"VIP", {"Access to all attractions + VIP lounge for two days", 150.00}}
+};
+
+// Function to display ticket options
+void displayTicketOptions(const std::map<std::string, TicketOption>& tickets) {
+    for (const auto& ticket : tickets) {
+        cout << ticket.first << " Ticket: " << ticket.second.description
+                  << " - $" << ticket.second.price << endl;
+    }
+}
+
+// Function to display days available for booking
+void displayDaysAvailable() {
+    std::cout << "Tickets are available for any valid day. Please enter your preferred booking date (DD/MM/YYYY): ";
+    // Here, you'd collect the user's input and verify the date's validity.
+}
+
+int main() {
+    cout << "One-Day Ticket Options:" <<endl;
+    displayTicketOptions(oneDayTickets);
+
+    cout << "\nTwo-Day Ticket Options:" <<endl;
+    displayTicketOptions(twoDayTickets);
+
+    cout << "\nDays Available for Booking:" <<endl;
+    displayDaysAvailable();
+
+    return 0;
+}
